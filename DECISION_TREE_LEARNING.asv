@@ -1,0 +1,44 @@
+
+function [ tree ] = DECISION_TREE_LEARNING( examples, attributes, binary_targets )
+str = sprintf('DTL: examples - %d attributes - %d binary_targets - %d.', size(examples, 1), length(attributes), length(binary_targets));
+disp(str);
+if all((binary_targets) == binary_targets(1))
+    disp('All binary targets have same value');
+    %all examples have the same value of binary_targets
+    tree.op    = [];
+    tree.kids  = [];
+    tree.class = binary_targets(1);
+    %tree = struct('op', [], 'kids', [],'class', binary_targets(1));
+elseif isempty(attributes)
+    disp('Attributes is empty');
+    %attributes is empty
+    tree.op    = [];
+    tree.kids  = [];
+    tree.class = mode(binary_targets);
+    %tree = struct('op', [], 'kids', [], 'class', mode(binary_targets));
+else
+    disp('Entered else case');
+    best_attribute = CHOOSE_BEST_DECISION_ATTRIBUTE(examples, attributes, binary_targets);   %implement
+    for u = 0:1,
+        [sub_examples, sub_targets] = FILTER(examples, best_attribute, u, binary_targets);
+        if isempty(sub_examples)
+            tree.kids{u + 1}.op    = best_attribute;
+            tree.kids{u + 1}.kids  = [];
+            tree.kids{u + 1}.class = mode(binary_targets);
+            %tree.kids{u + 1} = struct('op', best_attribute, 'kids', [],'class', mode(binary_targets));
+        else
+            sub_attributes = attributes;
+            str = sprintf('Best attribute = %d', best_attribute);
+            disp(str);
+            sub_attributes = SPECIAL_REMOVE(sub_attributes, best_attribute);
+            disp('About to nest');
+            tree.kids{u + 1} = DECISION_TREE_LEARNING(sub_examples, sub_attributes, sub_targets);
+            disp('back from nest');
+        end
+    end
+    tree.op    = best_attribute;
+    tree.class = [];
+end
+disp('£--------------------------------------------------------£');
+end
+

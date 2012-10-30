@@ -1,0 +1,17 @@
+%Load in clean data
+load cleandata_students.mat;
+%Get the emotion we're training for
+valid = 0;
+while valid == 0
+emotion_to_test_for = input('Enter emotion to test for 1-6: ');
+if (emotion_to_test_for < 7) && (emotion_to_test_for > 0)
+   valid = 1; 
+end
+end
+%Create a row vector of attributes
+attributes = 1:45;
+%Turns emotions (y) 1-6 into 1,0 row vector for 
+posneg = CREATE_POSNEG(y, emotion_to_test_for);
+
+%ok... lets try training one tree!
+tree = DECISION_TREE_LEARNING(x, 
