@@ -36,6 +36,7 @@ for i=1:length(attributes) %lets look at each attribute to see which is the best
     end
 remainder = (((p0 + n0)/(p + n)) * INFORMATION(p0, n0)) + (((p1 + n1)/(p + n)) * INFORMATION(p1, n1));
 gain      = infopn - remainder;  
+
 if gain >= bestinfo
    if gain > bestinfo
      best     = attributes(i);
