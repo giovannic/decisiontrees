@@ -1,6 +1,6 @@
 function [ps] = PREDICTIONS_DEPTH(t, x2)
 
-    ps = zeros(size(x2, 1),1);
+    ps = zeros(1,size(x2, 1));
 
     for emotion = 1:length(t),
     %for each tree iterate produce a vector of predictions
