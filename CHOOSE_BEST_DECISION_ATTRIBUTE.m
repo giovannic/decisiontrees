@@ -50,9 +50,6 @@ end
     
 end
 
-if bestinfo == 0
-    best = [];
-end
 end
 
 
