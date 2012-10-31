@@ -4,7 +4,6 @@ function [ best ] = CHOOSE_BEST_DECISION_ATTRIBUTE( examples, attributes, binary
 %UNTITLED5 Summary of this function goes here
 %   Detailed explanation goes here
 
-
 p        = sum(examples(:) == 1); %number of positive examples
 n        = sum(examples(:) == 0); %number of negative examples
 infopn   = INFORMATION(p, n);
@@ -49,6 +48,10 @@ if gain >= bestinfo
    end
 end
     
+end
+
+if bestinfo == 0
+    best = [];
 end
 end
 
