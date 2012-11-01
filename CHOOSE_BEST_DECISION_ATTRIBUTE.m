@@ -56,7 +56,7 @@ for i = 1:length(attributes)
 end
 
 if biggest < 0.07,
-    best = [];
+    %best = [];
 end
 end
 
