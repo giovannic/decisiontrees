@@ -25,4 +25,17 @@ classification rate = |classified| / |predictions| * 100
 recall rate (e) = confusion matrix(e,e) / sum over i {confusion matrix(e,i)} * 100
 precision rate (e) = confusion matrix(e,e) / sum over j {confusion matrix(j, e)} * 100
 
-f1(e) = 2 * precision rates(e) * recall rate(e) / (precision rates(e) + recall rate(e)) 
+f1(e) = 2 * precision rates(e) * recall rate(e) / (precision rates(e) + recall rate(e))
+
+
+
+pruning
+
+The above graph shows how the number of misclassifications vary with the size of the decision tree. The errors shown by the cross validation(blue) shows an average of the errors made over the folds. The resubstitution error(red) shows the proportion of which is caused by pruning, i.e. substituting a sub tree with a smaller one to give a looser fit and make the overall tree smaller.
+
+As more pruning takes place, more generalisations are made by the tree, the sizegets smaller and the cost increases sharply as the tree quickly loses specificity. As less pruning takes place the tree gradually increases in cost, despite the reduction in resubstitution cost, as it overfits the training data and cannot generalise to new data.
+
+The optimal tree size is with around 40 nodes since it strikes a balance with the pros and cons mentioned above.
+
+
+It was created using the pruning_example functionwhich creates the tree which both pruning methods use and prunes it using both methods. The method then plots the graph seen above. It can be seen that any amount of pruning increases the cost in the case of resubstition, with the ideal (least cost) number of nodes being 200. For cross validation however, pruning appears to have a sweet spot when around 40 nodes are remaining. This occurs because. 

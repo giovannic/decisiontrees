@@ -29,9 +29,10 @@ for fold = 1:folds,
         t{emotion} = DECISION_TREE_LEARNING(train_x, attributes, train_targets);
         t{emotion} = REDUCED(t{emotion}, test_x, binary_targets(s:e,emotion));
     end
-    p = PREDICTIONS_SIMUL(t, test_x);
+    p = PREDICTIONS_DEPTH(t, test_x);
     predictions(s:e) = p;
 end
+
 
 %confusion matrix
 predictions(predictions == 0) = NaN;
@@ -42,6 +43,8 @@ cm = CONFUSION_MATRIX(predictions, y);
 recall_rates = zeros(6,1);
 precision_rates = zeros(6,1);
 f1 = zeros(6,1);
+error_rate = length(predictions(predictions ~= y))/length(y);
+classification_rate = 1 - error_rate;
 for emotion = 1:6,
     recall_rates(emotion) = cm(emotion,emotion) / sum(cm(emotion,:)) * 100;
     precision_rates(emotion) = cm(emotion,emotion) / sum(cm(:,emotion)) * 100;
