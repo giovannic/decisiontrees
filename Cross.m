@@ -22,12 +22,13 @@ for fold = 1:folds,
     e = s + fold_size;
     train_x = x;
     train_x(s:e,:) = [];
+    test_x = x(s:e,:);
     for emotion = 1:6,
         train_targets = binary_targets(:,emotion);
         train_targets(s:e) = [];
         t{emotion} = DECISION_TREE_LEARNING(train_x, attributes, train_targets);
+        t{emotion} = REDUCED(t{emotion}, test_x, binary_targets(s:e,emotion));
     end
-    test_x = x(s:e,:);
     p = PREDICTIONS_SIMUL(t, test_x);
     predictions(s:e) = p;
 end
