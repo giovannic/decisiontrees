@@ -1,5 +1,7 @@
 function [ps] = PRED_SIMUL(t, x2)
 
+    occurances = zeros(6,1);
+
     ps = zeros(1, size(x2, 1));
     for example = 1:size(x2, 1)
         curr_trees = cell(1, length(t));
@@ -24,14 +26,17 @@ function [ps] = PRED_SIMUL(t, x2)
                     end
                     if curr_trees{i}.class == 1
                         result = [result, i];
+                        occurances(i) = occurances(i) + 1;
                     elseif curr_trees{i}.class == 0
                         neg_trees = [neg_trees i];
                     end
                 end
             end
             if ~isempty(result)
-                %----need to make random
-                emotion = result(randi(length(result),1));
+                %----pick the most common
+                os = occurances(result);
+                [~, ind] = max(os);
+                emotion = result(ind);
                 ps(example) = emotion;
             end
             if isempty(result) && length(neg_trees) == length(curr_trees)

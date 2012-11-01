@@ -28,12 +28,13 @@ for fold = 1:folds,
         t{emotion} = DECISION_TREE_LEARNING(train_x, attributes, train_targets);
     end
     test_x = x(s:e,:);
-    p = PREDICTIONS_RANDOM(t, test_x);
+    p = PREDICTIONS_SIMUL(t, test_x);
     predictions(s:e) = p;
 end
 
 %confusion matrix
 predictions(predictions == 0) = NaN;
+classification_rate = length(predictions(~isnan(predictions))) / length(y) * 100;
 cm = CONFUSION_MATRIX(predictions, y);
 
 %recall rates, precision rates & f1

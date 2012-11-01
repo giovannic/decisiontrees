@@ -32,19 +32,13 @@ for i = 1:length(attributes)
        end
        
     end
-    
-    %d  = abs(ENTROPY((np/(nn + np)), (nn/(nn + np))));
-    %d1 = abs(ENTROPY((ptpe/(ptpe + ptne)), (ntpe/(ntpe + ntne))));
-    %d0 = abs(ENTROPY((ptne/(ptpe + ptne)), (ntne/(ntpe + ntne))));
-    
-  %  gain(i) = d - (np/num_examples) * d1 - (nn/num_examples)* d0;
    
   all_gain = ENTROPY((np/(np + nn)), (nn/(np + nn)));
   
   if ptpe == 0 || ntpe == 0
      active_gain = 0;
   else
-  active_gain = ENTROPY((ptpe/(ntpe + ptpe)), (ntpe/(ntpe + ptpe)));
+     active_gain = ENTROPY((ptpe/(ntpe + ptpe)), (ntpe/(ntpe + ptpe)));
   end
     if ptne == 0 || ntne == 0
         dormant_gain = 0;
@@ -52,7 +46,6 @@ for i = 1:length(attributes)
         dormant_gain = ENTROPY((ptne/(ntne + ptne)), (ntne/(ntne + ptne)));
     end
   gain(i) = all_gain - ((ntpe + ptpe)/(np + nn))*active_gain - ((ntne + ptne)/(np + nn))*dormant_gain;
- % gain(i) = all_gain - ((ntne + ptne)/(np + nn))*dormant_gain - ((ntpe + ptpe)/(np + nn))*active_gain;
   
  
   if gain(i) > biggest
@@ -60,6 +53,10 @@ for i = 1:length(attributes)
      best    = attributes(i);
   end
   
+end
+
+if biggest < 0.07,
+    best = [];
 end
 end
 
