@@ -17,4 +17,6 @@ for emotion = 1:6,
     str = sprintf('CALLING DTL: examples - %d attributes - %d binary_targets - %d. \n', size(x, 1), length(attributes), length(binary_targets));
     disp(str);
     t{emotion} = DECISION_TREE_LEARNING(x, attributes, binary_targets(:,emotion));
+    t{emotion} = REDUCED(t{emotion}, x, binary_targets(:,emotion));
+    DrawDecisionTree(t{emotion}, emolab2str(emotion));
 end

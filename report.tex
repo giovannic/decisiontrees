@@ -8,11 +8,11 @@ The data was then iterated over 10 times producing 6 sets of trees trained with 
 
 The decision trees are trained by rooting the attribute which will result in the greatest information gain so we can reduce the size of our tree. We calculate the information gain by first calculating the entropy of the current set of examples. For each attribute we then calculate the entropies for the examples produced for each possible outcome, 0 or 1, and weight them on the fraction of the examples they will produce. These entropies are then subtracted from the total gain to give the gain. The attribute with the largest gain is selected.
 
-We considered setting a threshold on the information gain required to continue down a branch. This would sorten the tree and reduce overfitting. However we went for a reduced error pruning approach.
+On top of this we have a threshold for information gain. When selecting the best attribute, if the maximum information gain is below 0.07 we produce a leaf instead. This reduces overfitting and makes the tree smaller, more memory efficient. This has resulted in better F1 measure.
 
-[reduced error pruning]
+After our tree has been built [reduced error pruning]
 
-We make our predictions by walking the 6 trees, ignoring results with no successes across the trees and resolving conflicts in various ways: randomly, on common outcomes and on the depth of the successful leaf.
+We make our predictions by walking the 6 trees, ignoring results with no successes across the trees and resolving conflicts in various ways: randomly, on common outcomes and on the depth of the successful leaf, discussed in the ambiguity problem section.
 
 Our predictions are then aligned with the corresponding target data, y, and merged into a single vector so average results can be computed.
 
