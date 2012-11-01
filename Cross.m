@@ -13,7 +13,7 @@ for emotion = 1:6,
 end
 
 folds = 10;
-fold_size = round(length(y)/10);
+fold_size = floor(length(y)/10);
 predictions = zeros(length(y),1);
 
 %cross validation
@@ -28,12 +28,12 @@ for fold = 1:folds,
         t{emotion} = DECISION_TREE_LEARNING(train_x, attributes, train_targets);
     end
     test_x = x(s:e,:);
-    p = PREDICTIONS_DEPTH(t, test_x);
+    p = PREDICTIONS_RANDOM(t, test_x);
     predictions(s:e) = p;
 end
 
 %confusion matrix
-predictions(folds*fold_size + 1:length(predictions)) = NaN;
+predictions(predictions == 0) = NaN;
 cm = CONFUSION_MATRIX(predictions, y);
 
 %recall rates, precision rates & f1
